@@ -12,6 +12,7 @@ cc_config(
     ],
     linkflags = [
         "-L/opt/homebrew/lib",
+        "-L/opt/homebrew/opt/python@3.14/Frameworks/Python.framework/Versions/3.14/lib",
         "-Wl,-rpath,/opt/homebrew/lib",
         "-lglog",
         "-lgflags",

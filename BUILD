@@ -40,7 +40,7 @@ cc_library(
         "src/trading/trading/order_book_imbalance_strategy.cpp",
         "src/trading/trading/twap_example_strategy.cpp",
     ],
-    hdrs = glob(["src/trading/**/*.h"]),
+    hdrs = glob(["src/trading/**/*.h"], exclude=["src/trading/python/**/*.h"]),
     deps = [":folly", ":spdlog"],
     export_incs = ["src"],
 )
@@ -73,4 +73,35 @@ cc_binary(
     name = "twap_test",
     srcs = ["tests/twap_test.cpp"],
     deps = [":trading_core"],
+)
+
+PYTHON_CPPFLAGS = [
+    "-isystem",
+    "/opt/homebrew/opt/python@3.14/Frameworks/Python.framework/Versions/3.14/include/python3.14",
+]
+
+cc_library(
+    name = "python_strategy",
+    srcs = [
+        "src/trading/python/bindings.cpp",
+        "src/trading/python/python_runtime.cpp",
+        "src/trading/python/python_strategy.cpp",
+    ],
+    hdrs = glob(["src/trading/python/*.h"]),
+    deps = [":trading_core", "#python3.14"],
+    export_incs = ["src"],
+    extra_cppflags = PYTHON_CPPFLAGS,
+)
+
+cc_binary(
+    name = "python_demo",
+    srcs = ["src/python_main.cpp"],
+    deps = [":python_strategy", ":trading_core", ":spdlog"],
+)
+
+cc_binary(
+    name = "python_strategy_test",
+    srcs = ["tests/python_strategy_test.cpp"],
+    deps = [":python_strategy", ":trading_core"],
+    extra_cppflags = PYTHON_CPPFLAGS,
 )
