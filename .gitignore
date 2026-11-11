@@ -1,0 +1,22 @@
+# Build outputs and local dependency libraries
+/build*/
+/blade-bin
+/third_party/
+/compile_commands.json
+
+# Editor history and local settings
+/.history/
+/.idea/
+/.vscode/
+/.trae/
+/.agents/
+/.codex/
+.DS_Store
+
+# Local credentials and Python environments
+.env
+.env.*
+!.env.example
+/.venv/
+__pycache__/
+*.pyc

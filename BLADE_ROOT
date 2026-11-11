@@ -1,0 +1,31 @@
+global_config(
+    build_path_template = "build${bits}_${profile}",
+)
+
+cc_config(
+    cppflags = [
+        "-DGLOG_USE_GLOG_EXPORT",
+        "-DSPDLOG_COMPILED_LIB",
+        "-DSPDLOG_FMT_EXTERNAL",
+        "-isystem",
+        "/opt/homebrew/include",
+    ],
+    linkflags = [
+        "-L/opt/homebrew/lib",
+        "-Wl,-rpath,/opt/homebrew/lib",
+        "-lglog",
+        "-lgflags",
+        "-lfmt",
+        "-levent",
+        "-ldouble-conversion",
+        "-lssl",
+        "-lcrypto",
+        "-lz",
+        "-llz4",
+        "-lzstd",
+        "-lsnappy",
+        "-lsodium",
+    ],
+    warnings = ["-Wall", "-Wextra", "-Wpedantic", "-Werror"],
+    cxxflags = ["-std=c++20"],
+)
